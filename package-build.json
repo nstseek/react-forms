@@ -1,0 +1,30 @@
+{
+  "name": "react-forms",
+  "version": "1.0.0",
+  "description": "Create react forms with validation in a few lines of code - simple as that",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nstseek/react-forms.git"
+  },
+  "keywords": [
+    "react",
+    "forms",
+    "validation"
+  ],
+  "author": "Rafael Lopes Schneider",
+  "license": "ISC",
+  "types": "./",
+  "bugs": {
+    "url": "https://github.com/nstseek/react-forms/issues"
+  },
+  "homepage": "https://github.com/nstseek/react-forms#readme",
+  "peerDependencies": {
+    "node-sass": "^4.14.1",
+    "react": "^17.0.1",
+    "react-input-mask": "^2.0.4",
+    "react-text-mask": "^5.4.3",
+    "text-mask-addons": "^3.8.0",
+    "typescript": "^4.1.0"
+  }
+}
