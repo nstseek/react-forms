@@ -1,0 +1,34 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "no-duplicate-selectors": true,
+    "color-hex-case": "lower",
+    "selector-attribute-quotes": "always",
+    "declaration-block-trailing-semicolon": "always",
+    "declaration-no-important": true,
+    "property-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "comment-whitespace-inside": "always",
+    "at-rule-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "font-family-no-missing-generic-family-keyword": [true, {
+      ignoreFontFamilies: ["Helvetica Neue LT"]
+    }],
+    "media-feature-name-no-vendor-prefix": true,
+    "number-leading-zero": "always",
+    "selector-pseudo-element-no-unknown": [ true, {
+      "ignorePseudoElements": ["ng-deep"]
+    }],
+    "selector-pseudo-class-no-unknown": [ true, {
+      "ignorePseudoClasses": ["host"]
+    }],
+    "no-descending-specificity": null,
+    "selector-type-no-unknown": null,
+    "no-empty-source": null
+  }
+}

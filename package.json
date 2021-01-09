@@ -1,0 +1,70 @@
+{
+  "name": "react-forms",
+  "version": "1.0.0",
+  "description": "Create react forms with validation in a few lines of code - simple as that",
+  "main": "index.js",
+  "scripts": {
+    "start": "watch \"npm run build\" src/ --interval=1",
+    "test": "echo \"No tests yet\"",
+    "build": "tsc -b --verbose && scripts/copy-scss.sh src lib && cp package.json lib/package.json",
+    "prettier": "prettier --check \"src/**/*.scss\" \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "prettier:fix": "prettier --write \"src/**/*.scss\" \"src/**/*.ts\" \"src/**/*.tsx\"",
+    "lint": "eslint src/**/*.tsx src/**/*.ts && stylelint \"**/*.scss\" --config .stylelintrc",
+    "lint:fix": "eslint src/**/*.tsx src/**/*.ts --fix && stylelint \"**/*.scss\" --config .stylelintrc --fix",
+    "check": "npm run lint && npm run prettier && npm run build",
+    "check:fix": "npm run lint:fix && npm run prettier:fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nstseek/react-forms.git"
+  },
+  "keywords": [
+    "react",
+    "forms",
+    "validation"
+  ],
+  "author": "Rafael Lopes Schneider",
+  "license": "ISC",
+  "types": "./",
+  "bugs": {
+    "url": "https://github.com/nstseek/react-forms/issues"
+  },
+  "homepage": "https://github.com/nstseek/react-forms#readme",
+  "dependencies": {
+    "@types/react": "^16.9.56",
+    "node-sass": "^4.14.1",
+    "react": "^17.0.1",
+    "react-input-mask": "^2.0.4",
+    "react-text-mask": "^5.4.3",
+    "text-mask-addons": "^3.8.0",
+    "typescript": "^4.1.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.12.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "stylelint": "^13.7.2",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-scss": "^3.18.0",
+    "watch": "^1.0.2"
+  },
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "arrowParens": "always",
+    "jsxBracketSameLine": true,
+    "jsxSingleQuote": true,
+    "printWidth": 80,
+    "useTabs": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run check"
+    }
+  }
+}
