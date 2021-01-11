@@ -30,3 +30,4 @@ const newVersion = `"version": "${
 file = file.replace(versionStr, newVersion);
 
 fs.writeFileSync(process.argv[2], file);
+fs.writeFileSync('lib/package.json', file);
