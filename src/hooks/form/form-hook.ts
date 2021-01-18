@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import Form from './form-class';
 import { Props as InputProps } from '../../components/Input/Input';
+import { Props as SelectProps } from '../../components/Select/Select';
 
 type InputOptions = Omit<InputProps<any>, 'formKey' | 'form'>;
+
+type SelectOptions = Omit<SelectProps<any>, 'formKey' | 'form'>;
 
 export interface Error {
   id: string;
@@ -28,7 +31,8 @@ interface FormBase<T> {
   initialValue: T | '';
   validators?: Validator<T>[];
   getter?: (this: FormControl<T>) => T;
-  inputOptions: InputOptions;
+  inputOptions?: InputOptions;
+  selectOptions?: SelectOptions;
 }
 
 /**

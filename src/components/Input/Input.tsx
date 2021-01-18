@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
 import InputMaskComponent from 'react-input-mask';
 import MaskedInput from 'react-text-mask';
 import { FormGroup, GenericModel } from '../../hooks/form/form-hook';
 import { requiredId, maxLengthId } from '../../validators/index';
 import { createNumberMask } from 'text-mask-addons';
-import './Input.scss';
 
 export interface Props<T extends GenericModel<T>> {
   /**
@@ -80,6 +79,10 @@ export interface Props<T extends GenericModel<T>> {
    */
   currency?: boolean;
   /**
+   * This defines if the input is a percentage input
+   */
+  percentage?: boolean;
+  /**
    * This hides the * that shows up when the input is required
    */
   hideRequired?: boolean;
@@ -87,6 +90,10 @@ export interface Props<T extends GenericModel<T>> {
    * This hides the input's label
    */
   hideLabel?: boolean;
+  /**
+   * This defines if the Input component should be rendered with his CSS styles
+   */
+  includeStyles?: boolean;
   /**
    * This function runs when the user press enter while focusing the input
    */
@@ -97,7 +104,37 @@ export interface Props<T extends GenericModel<T>> {
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
-const InputMask = InputMaskComponent;
+const defaultMaskOptions = {
+  prefix: 'R$',
+  suffix: '',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: '.',
+  allowDecimal: true,
+  decimalSymbol: ',',
+  decimalLimit: 2,
+  allowNegative: false,
+  allowLeadingZeroes: false,
+  inputMode: 'numeric'
+};
+const currencyMask = createNumberMask({
+  ...defaultMaskOptions
+});
+
+const percentageMaskOptions = {
+  prefix: '',
+  suffix: '%',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: '.',
+  allowDecimal: true,
+  decimalSymbol: ',',
+  decimalLimit: 2,
+  allowNegative: false,
+  allowLeadingZeroes: false,
+  inputMode: 'numeric'
+};
+const percentageMask = createNumberMask({
+  ...percentageMaskOptions
+});
 
 /**
  * This component will instance an HTML label and input tag and will handle changes appropriately, updating your form when needed as the user types data in
@@ -107,6 +144,12 @@ const InputMask = InputMaskComponent;
 function Input<T extends GenericModel<T>>(
   props: PropsWithChildren<Props<T>>
 ): ReactElement<any, any> | null {
+  useEffect(() => {
+    if (props.includeStyles) {
+      require('./Input.scss');
+    }
+  }, [props.includeStyles]);
+
   const onChange =
     props.onChange === undefined
       ? (event) => {
@@ -159,22 +202,6 @@ function Input<T extends GenericModel<T>>(
     />
   );
 
-  const defaultMaskOptions = {
-    prefix: 'R$',
-    suffix: '',
-    includeThousandsSeparator: true,
-    thousandsSeparatorSymbol: '.',
-    allowDecimal: true,
-    decimalSymbol: ',',
-    decimalLimit: 2,
-    allowNegative: false,
-    allowLeadingZeroes: false,
-    inputMode: 'numeric'
-  };
-  const currencyMask = createNumberMask({
-    ...defaultMaskOptions
-  });
-
   return (
     <div
       className={props.className ? props.className + ' Input' : 'Input'}
@@ -187,7 +214,17 @@ function Input<T extends GenericModel<T>>(
           {required ? <span className='red-warning'>*</span> : null}
         </label>
       )}
-      {props.currency ? (
+      {props.percentage ? (
+        <MaskedInput
+          className={error && showErrors ? 'error' : null}
+          id={props.id}
+          disabled={props.disabled}
+          mask={percentageMask}
+          onChange={onChange}
+          placeholder={props.placeholder}
+          value={value}
+        />
+      ) : props.currency ? (
         <MaskedInput
           className={error && showErrors ? 'error' : null}
           id={props.id}
@@ -198,7 +235,7 @@ function Input<T extends GenericModel<T>>(
           value={value}
         />
       ) : props.mask ? (
-        <InputMask
+        <InputMaskComponent
           className={error && showErrors ? 'error' : null}
           //@ts-expect-error - InputMask @types package has a few type errors, so, this is required
           maskChar={null}
@@ -206,7 +243,7 @@ function Input<T extends GenericModel<T>>(
           onChange={onChange}
           mask={props.mask}>
           {() => input}
-        </InputMask>
+        </InputMaskComponent>
       ) : (
         input
       )}

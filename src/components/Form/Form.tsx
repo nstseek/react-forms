@@ -1,7 +1,8 @@
 import Input from '../Input/Input';
-import { FormBuilder, FormGroup } from '../../hooks/form/index';
+import { FormGroup } from '../../hooks/form/index';
 import React, { PropsWithChildren } from 'react';
 import './Form.scss';
+import Select from 'components/Select/Select';
 
 interface Props<T> {
   /**
@@ -20,13 +21,12 @@ interface Props<T> {
 
 /**
  * This component generates an HTML structure and links the inputs with the form provided, creating and linking inputs based on the provided form
- * @param props - The default component props, take a look at the Props interface for more details
+ * @param props - The default component props. Take a look at the Props interface for more details. (To be documented)
  */
 function Form<T>(
   props: PropsWithChildren<Props<T>>
 ): React.ReactElement<any, any> | null {
-  const defaultInput = (key: string, index: number) => {
-    const formKey = key as keyof FormBuilder<T>;
+  const defaultInput = (formKey: keyof T, index: number) => {
     return (
       <div className='row' key={index}>
         <div className='column'>
@@ -41,12 +41,31 @@ function Form<T>(
       </div>
     );
   };
+  const defaultSelect = (formKey: keyof T, index: number) => {
+    return (
+      <div className='row' key={index}>
+        <div className='column'>
+          <Select<any>
+            form={props.form}
+            formKey={formKey}
+            showErrors={!!props.showErrors}
+            {...props.form.builder[formKey].selectOptions}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <form className='Form'>
-      {Object.keys(props.form.builder).map((key, index) =>
-        defaultInput(key, index)
-      )}
+      {Object.keys(props.form.builder).map((k, index) => {
+        const key = k as keyof T;
+        if (props.form.builder[key].inputOptions) {
+          return defaultInput(key, index);
+        } else if (props.form.builder[key].selectOptions) {
+          return defaultSelect(key, index);
+        }
+      })}
     </form>
   );
 }

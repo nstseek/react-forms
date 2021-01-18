@@ -1,0 +1,47 @@
+@import '../../../scss/constants/transitions.scss';
+
+div.Select {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: 'Helvetica Neue LT';
+  label {
+    text-align: center;
+    width: 100%;
+    font-weight: 700;
+    color: #008bc7;
+    margin-bottom: 8px;
+    &.error {
+      color: #ff5e5e;
+    }
+  }
+  select {
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid #fff;
+    background-color: #e7e8e9;
+    padding: 13px;
+    transition: all $transition-duration ease-in-out;
+    text-align: center;
+    text-align-last: center;
+    &:focus {
+      background-color: white;
+      border-color: #e7e8e9;
+    }
+    &.error {
+      background-color: #ffd6d6;
+      border-color: #ff5e5e;
+    }
+  }
+  span#error {
+    color: #ff5e5e;
+    margin-top: 3px;
+    margin-right: 21px;
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+}

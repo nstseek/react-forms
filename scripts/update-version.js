@@ -13,9 +13,11 @@ if (
   process.exit(1);
 }
 
-let file = fs.readFileSync(process.argv[2], { encoding: 'utf-8' });
+let packageBuild = fs.readFileSync(process.argv[2], { encoding: 'utf-8' });
 
-const versionStr = file.match(/"version": "[\d.]*"/g)[0];
+let packageJson = fs.readFileSync('package.json', { encoding: 'utf-8' });
+
+const versionStr = packageBuild.match(/"version": "[\d.]*"/g)[0];
 
 const versionNum = versionStr.replace('"version": ', '').replace(/"/g, '');
 
@@ -27,7 +29,13 @@ const newVersion = `"version": "${
   increaseVersion === '--patch' ? Number(patchVersion) + 1 : patchVersion
 }"`;
 
-file = file.replace(versionStr, newVersion);
+packageBuild = packageBuild.replace(versionStr, newVersion);
 
-fs.writeFileSync(process.argv[2], file);
-fs.writeFileSync('lib/package.json', file);
+fs.writeFileSync(process.argv[2], packageBuild);
+fs.writeFileSync('lib/package.json', packageBuild);
+
+const packageJsonVersion = packageJson.match(/"version": "[\d.]*"/g)[0];
+
+packageJson = packageJson.replace(packageJsonVersion, newVersion);
+
+fs.writeFileSync('package.json', packageJson);
