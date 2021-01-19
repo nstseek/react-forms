@@ -3,7 +3,7 @@ import Backdrop from '../Backdrop/Backdrop';
 import './ModalKeyValue.scss';
 import KeyValue from './components/KeyValue/KeyValue';
 import _ from 'lodash';
-import KeyValueModel from 'utils/types/key-value';
+import KeyValueModel from '../../utils/types/key-value';
 
 export interface FormKeyValue extends KeyValueModel {
   selected?: boolean;
