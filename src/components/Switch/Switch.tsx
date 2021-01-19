@@ -1,7 +1,7 @@
 import { GenericModel } from 'hooks/form';
 import Form from 'hooks/form/form-class';
 import React, { PropsWithChildren, ReactElement, useState } from 'react';
-import { requiredId } from 'validators';
+import { requiredId } from '../../validators';
 import Input, { Props as InputProps } from '../Input/Input';
 import './Switch.scss';
 

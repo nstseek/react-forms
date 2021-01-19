@@ -3,7 +3,7 @@ import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
 import InputMaskComponent from 'react-input-mask';
 import MaskedInput from 'react-text-mask';
 import { FormGroup, GenericModel } from '../../hooks/form/form-hook';
-import { requiredId, maxLengthId } from '../../validators/index';
+import { requiredId, maxLengthId } from '../../validators';
 import { createNumberMask } from 'text-mask-addons';
 
 export interface Props<T extends GenericModel<T>> {

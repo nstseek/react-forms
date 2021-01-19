@@ -1,6 +1,6 @@
 import { FormGroup, GenericModel } from 'hooks/form';
 import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
-import { requiredId } from 'validators';
+import { requiredId } from '../../validators';
 import './Select.scss';
 
 export interface Option {
