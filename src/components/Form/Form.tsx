@@ -2,7 +2,7 @@ import Input from '../Input/Input';
 import { FormGroup } from '../../hooks/form/index';
 import React, { PropsWithChildren } from 'react';
 import './Form.scss';
-import Select from 'components/Select/Select';
+import Select from '../Select/Select';
 
 interface Props<T> {
   /**
