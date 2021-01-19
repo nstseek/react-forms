@@ -1,7 +1,5 @@
-@import '../../../scss/constants/zindexes.scss';
-
 div.Backdrop {
-  z-index: $backdrop-zindex;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
