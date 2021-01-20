@@ -1,6 +1,6 @@
 {
   "name": "@nstseek/react-forms",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "description": "Create react forms with validation in a few lines of code - simple as that",
   "main": "index.js",
   "repository": {

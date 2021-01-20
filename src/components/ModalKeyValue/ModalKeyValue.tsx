@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Backdrop from '../Backdrop/Backdrop';
 import './ModalKeyValue.scss';
 import KeyValue from './components/KeyValue/KeyValue';
 import _ from 'lodash';
 import KeyValueModel from '../../utils/types/key-value';
+import { Backdrop } from '@nstseek/react-ui/components';
 
 export interface FormKeyValue extends KeyValueModel {
   selected?: boolean;
@@ -73,9 +73,7 @@ const ModalKeyValue: React.FC<Props> = (props) => {
   };
 
   return (
-    //@ts-expect-error Need to check for children in Props interface inside Backdrop component - Backdrop component should always have childrens
-    //but when I add childrens to the Backdrop component, ts shows a type error
-    <Backdrop onBackdropClick={props.close}>
+    <Backdrop zIndex={1500} onBackdropClick={() => props.close(null)}>
       <div className='ModalKeyValue'>
         <div id='header'></div>
         <div id='content'>
