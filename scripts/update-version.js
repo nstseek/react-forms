@@ -23,11 +23,21 @@ const versionNum = versionStr.replace('"version": ', '').replace(/"/g, '');
 
 const [majorVersion, minorVersion, patchVersion] = versionNum.split('.');
 
-const newVersion = `"version": "${
-  increaseVersion === '--major' ? Number(majorVersion) + 1 : majorVersion
-}.${increaseVersion === '--minor' ? Number(minorVersion) + 1 : minorVersion}.${
-  increaseVersion === '--patch' ? Number(patchVersion) + 1 : patchVersion
-}"`;
+let newVersion;
+
+switch (increaseVersion) {
+  case '--major':
+    newVersion = `"version": "${Number(majorVersion) + 1}.0.0"`;
+    break;
+  case '--minor':
+    newVersion = `"version": "${majorVersion}.${Number(minorVersion) + 1}.0"`;
+    break;
+  case '--patch':
+    newVersion = `"version": "${majorVersion}.${minorVersion}.${
+      Number(patchVersion) + 1
+    }"`;
+    break;
+}
 
 packageBuild = packageBuild.replace(versionStr, newVersion);
 
