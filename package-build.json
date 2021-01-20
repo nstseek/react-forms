@@ -1,6 +1,6 @@
 {
   "name": "@nstseek/react-forms",
-  "version": "2.4.9",
+  "version": "2.5.9",
   "description": "Create react forms with validation in a few lines of code - simple as that",
   "main": "index.js",
   "repository": {
@@ -22,5 +22,8 @@
     "text-mask-addons": "^3.8.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "peerDependencies": {
+    "@nstseek/react-ui": "^1.2.2"
   }
 }
