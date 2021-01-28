@@ -28,6 +28,10 @@ export interface Props<T extends GenericModel<T>> {
   onChange?(event: React.ChangeEvent<HTMLSelectElement>): void;
   form: FormGroup<T>;
   options: Option[];
+  /**
+   * This hides the * that shows up when the input is required
+   */
+  hideRequired?: boolean;
 }
 
 function Select<T extends GenericModel<T>>(
@@ -52,12 +56,13 @@ function Select<T extends GenericModel<T>>(
       ? props.form?.state?.[props.formKey]?.errors?.[0]?.message
       : props.error;
   const showErrors = props.showErrors === undefined ? true : props.showErrors;
-  const required =
-    props.required === undefined
-      ? !!props.form?.builder?.[props.formKey]?.validators.find(
-          (validator) => validator.id === requiredId
-        )
-      : props.required;
+  const required = props.hideRequired
+    ? false
+    : props.required === undefined
+    ? !!props.form?.builder?.[props.formKey]?.validators.find(
+        (validator) => validator.id === requiredId
+      )
+    : props.required;
   const value =
     props.value === undefined
       ? (props.form?.state?.[props.formKey]?.value as string | number)

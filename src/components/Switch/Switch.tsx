@@ -28,6 +28,10 @@ export interface Props<
   input?: InputProps<K>;
   form: Form<T>;
   formKey: keyof T;
+  /**
+   * This hides the * that shows up when the input is required
+   */
+  hideRequired?: boolean;
 }
 
 /**
@@ -39,9 +43,11 @@ function Switch<
   T extends GenericModel<T>,
   K extends GenericModel<K> = GenericModel<Record<string, unknown>>
 >(props: PropsWithChildren<Props<T, K>>): ReactElement<any, any> | null {
-  const required = !!props.form?.builder?.[props.formKey]?.validators?.find(
-    (validator) => validator.id === requiredId
-  );
+  const required = props.hideRequired
+    ? false
+    : !!props.form?.builder?.[props.formKey]?.validators?.find(
+        (validator) => validator.id === requiredId
+      );
   const showErrors = props.showErrors === undefined ? true : props.showErrors;
   const error = props.form?.state?.[props.formKey]?.errors?.[0]?.message;
 
