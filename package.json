@@ -1,6 +1,6 @@
 {
   "name": "react-forms",
-  "version": "2.5.10",
+  "version": "2.6.0",
   "description": "Create react forms with validation in a few lines of code - simple as that",
   "main": "index.js",
   "scripts": {

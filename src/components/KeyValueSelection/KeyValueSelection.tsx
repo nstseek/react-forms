@@ -8,6 +8,7 @@ interface Props {
   keyValues: KeyValue[];
   label: string;
   buttonLabel: string;
+  maxItems?: number;
 }
 
 const KeyValueSelection: React.FC<Props> = (props) => {
@@ -16,17 +17,19 @@ const KeyValueSelection: React.FC<Props> = (props) => {
       <label htmlFor={String(props.label)}>{props.label}</label>
       {props.keyValues && props.keyValues.length ? (
         <div id='list'>
-          {props.keyValues.slice(0, 4).map((keyValue) => (
-            <div className='card' key={keyValue.key}>
-              {keyValue.value}
-              <span
-                className='clickable'
-                id='close'
-                onClick={() => props.remove(keyValue.key)}>
-                X
-              </span>
-            </div>
-          ))}
+          {(props.maxItems ? props.keyValues.slice(0, 4) : props.keyValues).map(
+            (keyValue) => (
+              <div className='card' key={keyValue.key}>
+                {keyValue.value}
+                <span
+                  className='clickable'
+                  id='close'
+                  onClick={() => props.remove(keyValue.key)}>
+                  X
+                </span>
+              </div>
+            )
+          )}
         </div>
       ) : null}
       <button onClick={props.add}>+ ADICIONAR {props.buttonLabel}</button>
