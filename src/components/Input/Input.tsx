@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
 import InputMaskComponent from 'react-input-mask';
+import NumberFormat from 'react-number-format';
 import MaskedInput from 'react-text-mask';
 import { FormGroup, GenericModel } from '../../hooks/form/form-hook';
 import { requiredId, maxLengthId } from '../../validators';
@@ -103,22 +104,6 @@ export interface Props<T extends GenericModel<T>> {
    */
   onChange?(event: React.ChangeEvent<HTMLInputElement>): void;
 }
-
-const defaultMaskOptions = {
-  prefix: 'R$',
-  suffix: '',
-  includeThousandsSeparator: true,
-  thousandsSeparatorSymbol: '.',
-  allowDecimal: true,
-  decimalSymbol: ',',
-  decimalLimit: 2,
-  allowNegative: false,
-  allowLeadingZeroes: false,
-  inputMode: 'numeric'
-};
-const currencyMask = createNumberMask({
-  ...defaultMaskOptions
-});
 
 const percentageMaskOptions = {
   prefix: '',
@@ -225,14 +210,20 @@ function Input<T extends GenericModel<T>>(
           value={value}
         />
       ) : props.currency ? (
-        <MaskedInput
+        <NumberFormat
+          value={value}
+          onChange={onChange}
+          placeholder={props.placeholder}
           className={error && showErrors ? 'error' : null}
           id={props.id}
           disabled={props.disabled}
-          mask={currencyMask}
-          onChange={onChange}
-          placeholder={props.placeholder}
-          value={value}
+          thousandSeparator='.'
+          decimalSeparator=','
+          decimalScale={2}
+          fixedDecimalScale={true}
+          allowNegative={false}
+          allowLeadingZeros={false}
+          prefix={'R$'}
         />
       ) : props.mask ? (
         <InputMaskComponent
