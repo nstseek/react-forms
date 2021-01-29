@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './ModalKeyValue.scss';
 import KeyValue from './components/KeyValue/KeyValue';
 import _ from 'lodash';
@@ -25,6 +25,8 @@ const ModalKeyValue: React.FC<Props> = (props) => {
     ...props.keyValues
   ]);
   const [selecionados, setSelecionados] = useState(0);
+  const scrollPosition = useRef(0);
+  const listEl = useRef<HTMLDivElement>();
 
   useEffect(() => {
     let counter = 0;
@@ -37,6 +39,7 @@ const ModalKeyValue: React.FC<Props> = (props) => {
   }, [keyValues]);
 
   useEffect(() => {
+    scrollPosition.current = listEl.current.scrollTop;
     const newKeyValues = [...keyValues].map((keyValue) => ({
       ...keyValue,
       selected: props.selected.findIndex((key) => keyValue.key === key) >= 0
@@ -44,11 +47,18 @@ const ModalKeyValue: React.FC<Props> = (props) => {
     setKeyValues(newKeyValues);
   }, [props.selected]);
 
+  useLayoutEffect(() => {
+    listEl.current.scrollTo({
+      top: scrollPosition.current
+    });
+  }, [keyValues]);
+
   const mapKeyValues = (keyValue) => (
     <KeyValue
       key={keyValue.key}
       keyValue={keyValue}
       onClick={() => {
+        scrollPosition.current = listEl.current.scrollTop;
         const newKeyValues = [...keyValues];
         const changedKvIndex = newKeyValues.findIndex(
           (kV) => kV.key === keyValue.key
@@ -93,6 +103,7 @@ const ModalKeyValue: React.FC<Props> = (props) => {
           <p id='marcar-desmarcar' className='clickable'>
             <span
               onClick={() => {
+                scrollPosition.current = listEl.current.scrollTop;
                 const newKeyValues = [...keyValues];
                 newKeyValues.forEach((keyValue) => (keyValue.selected = true));
                 setKeyValues(newKeyValues);
@@ -102,6 +113,7 @@ const ModalKeyValue: React.FC<Props> = (props) => {
             /
             <span
               onClick={() => {
+                scrollPosition.current = listEl.current.scrollTop;
                 const newKeyValues = [...keyValues];
                 newKeyValues.forEach((keyValue) => (keyValue.selected = false));
                 setKeyValues(newKeyValues);
@@ -109,7 +121,7 @@ const ModalKeyValue: React.FC<Props> = (props) => {
               Desmarcar todos
             </span>
           </p>
-          <div id='list'>
+          <div id='list' ref={listEl}>
             {pesquisa
               ? keyValues
                   ?.filter(
