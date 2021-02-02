@@ -1,6 +1,7 @@
 ## react-forms
 
-https://img.shields.io/npm/v/@nstseek/react-forms
+
+[![npm version](https://img.shields.io/npm/v/@nstseek/react-forms)](https://www.npmjs.com/package/@nstseek/react-forms)
 
 Forms on React made simple - that's it.
 
