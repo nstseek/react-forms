@@ -2,7 +2,7 @@
 
 
 [![npm version](https://img.shields.io/npm/v/@nstseek/react-forms)](https://www.npmjs.com/package/@nstseek/react-forms)
-![CI](https://github.com/nstseek/react-forms/workflows/CI/badge.svg)
+[![CI](https://github.com/nstseek/react-forms/workflows/CI/badge.svg)](https://github.com/nstseek/react-forms/actions?query=workflow%3ACI)
 
 Forms on React made simple - that's it.
 
