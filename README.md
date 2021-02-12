@@ -8,4 +8,4 @@ Forms on React made simple - that's it.
 
 With a few lines of code you can create a complete form, with validation, getters, and types (TypeScript)
 
-Code snippet to be provided.
+Code snippets and live examples will be provided soon.
