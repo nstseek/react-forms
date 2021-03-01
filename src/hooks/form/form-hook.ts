@@ -7,6 +7,8 @@ type InputOptions = Omit<InputProps<any>, 'formKey' | 'form'>;
 
 type SelectOptions = Omit<SelectProps<any>, 'formKey' | 'form'>;
 
+export type RawTypes = string | number;
+
 export interface Error {
   id: string;
   message: string;
@@ -29,7 +31,7 @@ export interface Validator<T> {
  */
 interface FormBase<T> {
   initialValue: T | '';
-  validators?: Validator<T>[];
+  validators?: Validator<RawTypes>[];
   getter?: (this: FormControl<T>) => T;
   inputOptions?: InputOptions;
   selectOptions?: SelectOptions;
@@ -44,7 +46,7 @@ interface FormBase<T> {
  */
 export interface FormControl<T> {
   value: T;
-  _value: T;
+  _value: RawTypes;
   errors: Error[];
 }
 
@@ -86,7 +88,7 @@ export type FormGroup<T> = {
  * This asserts that your model doesn't have objects or non-primitive types inside of it, since this is not supported
  */
 export type GenericModel<T> = {
-  [K in keyof T]: string | number | boolean | number[];
+  [K in keyof T]: any;
 };
 
 /**
@@ -149,7 +151,7 @@ export default function useForm<T extends GenericModel<T>>(
         get value() {
           return model[key].getter ? model[k].getter.call(this) : this._value; // ??? wtf
         },
-        _value: formData[key],
+        _value: formData[key] as string,
         errors: model[key].validators
           ? runValidators(model[k].validators, formData[k])
           : []

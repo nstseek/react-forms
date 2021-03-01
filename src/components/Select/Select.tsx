@@ -1,7 +1,7 @@
 import { FormGroup, GenericModel } from 'hooks/form';
-import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
-import { requiredId } from '../../validators';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import './Select.scss';
+import { requiredId } from '../../validators';
 
 export interface Option {
   id?: number;
@@ -12,6 +12,7 @@ export interface Option {
 }
 
 export interface Props<T extends GenericModel<T>> {
+  className?: string;
   formKey: keyof T;
   label: string;
   showErrors?: boolean;
@@ -37,12 +38,6 @@ export interface Props<T extends GenericModel<T>> {
 function Select<T extends GenericModel<T>>(
   props: PropsWithChildren<Props<T>>
 ): ReactElement<any, any> | null {
-  useEffect(() => {
-    if (props.includeStyles) {
-      require('./Select.scss');
-    }
-  }, [props.includeStyles]);
-
   const onChange =
     props.onChange === undefined
       ? (event) => {
@@ -71,7 +66,10 @@ function Select<T extends GenericModel<T>>(
   const name = props.formKey || props.id || props.label.replace(' ', '');
 
   return (
-    <div className='Select'>
+    <div
+      className={`Select${props.includeStyles ? ' styled' : ''}${
+        props.className ? ' ' + props.className : ''
+      }`}>
       <label
         className={error && showErrors ? 'error' : null}
         htmlFor={String(name)}>

@@ -1,3 +1,4 @@
+import { RawTypes } from '.';
 import { FormBuilder, FormGroup, FormState } from './form-hook';
 
 class Form<T> implements FormGroup<T> {
@@ -14,6 +15,7 @@ class Form<T> implements FormGroup<T> {
      * This function should be used to change your entire form, receiving an object that has the form's original Model as the type
      * @param data - This is the object containing the new values
      */
+    // TODO: this `data` should have receive only RawTypes, only string and number, the form getter should convert the values to another type if needed
     public patchValue: (data: Partial<T>) => void,
     /**
      * This function resets your form to the original, first-built state
@@ -40,8 +42,10 @@ class Form<T> implements FormGroup<T> {
   /**
    * This getter will return the raw form value for you as a single object, just like the original Model
    */
-  get _value(): T {
-    const values: T = {} as T;
+  get _value(): { [K in keyof T]: RawTypes } {
+    const values: { [K in keyof T]: RawTypes } = {} as {
+      [K in keyof T]: RawTypes;
+    };
     Object.keys(this.state).forEach((k) => {
       const key = k as keyof T;
       values[key] = this.state[key]._value;

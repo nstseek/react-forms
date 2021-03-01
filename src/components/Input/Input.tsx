@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { PropsWithChildren, ReactElement, useEffect } from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import InputMaskComponent from 'react-input-mask';
 import NumberFormat from 'react-number-format';
 import MaskedInput from 'react-text-mask';
 import { FormGroup, GenericModel } from '../../hooks/form/form-hook';
 import { requiredId, maxLengthId } from '../../validators';
 import { createNumberMask } from 'text-mask-addons';
+import './Input.scss';
 
 export interface Props<T extends GenericModel<T>> {
   /**
@@ -15,7 +15,15 @@ export interface Props<T extends GenericModel<T>> {
   /**
    * The HTML type of this form
    */
-  type: 'radio' | 'number' | 'text' | 'password' | 'email' | 'url';
+  type:
+    | 'radio'
+    | 'number'
+    | 'text'
+    | 'password'
+    | 'email'
+    | 'url'
+    | 'date'
+    | 'checkbox';
   /**
    * Optional: you can provide a variable here to be used as the input HTML value
    * WARNING: This can deactivate the automatic form updates
@@ -129,18 +137,20 @@ const percentageMask = createNumberMask({
 function Input<T extends GenericModel<T>>(
   props: PropsWithChildren<Props<T>>
 ): ReactElement<any, any> | null {
-  useEffect(() => {
-    if (props.includeStyles) {
-      require('./Input.scss');
-    }
-  }, [props.includeStyles]);
-
   const onChange =
     props.onChange === undefined
       ? (event) => {
-          props.form.patchValue({
-            [props.formKey]: event.target.value
-          } as Partial<T>);
+          if (event.target.type === 'radio') {
+            if (event.target.checked) {
+              props.form.patchValue({
+                [props.formKey]: event.target.value
+              } as Partial<T>);
+            }
+          } else {
+            props.form.patchValue({
+              [props.formKey]: event.target.value
+            } as Partial<T>);
+          }
         }
       : props.onChange;
   const error =
@@ -189,7 +199,9 @@ function Input<T extends GenericModel<T>>(
 
   return (
     <div
-      className={props.className ? props.className + ' Input' : 'Input'}
+      className={`Input${props.includeStyles ? ' styled' : ''}${
+        props.className ? ' ' + props.className : ''
+      }`}
       {...(props.id ? { id: props.id } : {})}>
       {props.hideLabel ? null : (
         <label
