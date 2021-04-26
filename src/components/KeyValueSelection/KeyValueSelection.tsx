@@ -19,12 +19,12 @@ const KeyValueSelection: React.FC<Props> = (props) => {
         <div id='list'>
           {(props.maxItems ? props.keyValues.slice(0, 4) : props.keyValues).map(
             (keyValue) => (
-              <div className='card' key={keyValue.key}>
-                {keyValue.value}
+              <div className='card' key={keyValue?.key}>
+                {keyValue?.value}
                 <span
                   className='clickable'
                   id='close'
-                  onClick={() => props.remove(keyValue.key)}>
+                  onClick={() => props.remove(keyValue?.key)}>
                   X
                 </span>
               </div>
